@@ -8,6 +8,10 @@ from chatgpt_voice_assistant.clients.apple_say_text_to_speech_client import (
 from chatgpt_voice_assistant.clients.google_text_to_speech_client import (
     GoogleTextToSpeechClient,
 )
+from chatgpt_voice_assistant.clients.eleven_labs_text_to_speech_client import (
+    ElevenLabsTextToSpeechClient,
+)
+
 from chatgpt_voice_assistant.command_line_parser import CommandLineParser
 from chatgpt_voice_assistant.computer_voice_responder import ComputerVoiceResponder
 from chatgpt_voice_assistant.conversation import Conversation
@@ -54,6 +58,8 @@ def main() -> None:
     text_to_speech_client: TextToSpeechClient
     if options.tts == "apple":
         text_to_speech_client = AppleSayTextToSpeechClient()
+    elif options.tts == "elevenlabs":
+        text_to_speech_client = ElevenLabsTextToSpeechClient(options.elevenlabs_api_key)
     else:
         text_to_speech_client = GoogleTextToSpeechClient(options.lang, options.tld)
 

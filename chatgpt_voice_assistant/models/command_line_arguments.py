@@ -3,7 +3,7 @@ from typing import NamedTuple
 
 class CommandLineArguments(NamedTuple):
     """The model object containing the values of the passed in CLI arguments"""
-
+    elevenlabs_api_key: str
     input_device_name: str
     lang: str
     log_level: str
