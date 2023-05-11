@@ -5,6 +5,8 @@
 A simple interface to the OpenAI ChatGPT model with speech to text for input and text to speech for the output.
 chatgpt-voice-assistant uses Google Translate's text-to-speech free API for audio input and output (not OpenAI Whisper).
 
+Jodie's notes: I'm chainsawing some stuff over the top of jakecyr's stuff. Use my fork at your own risk. 
+
 ## Setup
 
 ### Mac Prerequisites
@@ -106,9 +108,12 @@ Below is the help menu from the chatgpt-assist CLI detailing all available optio
 
 --open-ai-key OPEN_AI_KEY
     Required. Open AI Secret Key (or set OPENAI_API_KEY environment variable)
+    
+--elevenlabs-ai-key ELEVENLABS_API_KEY
+    Required if you choose --tts elevenlabs (or set ELEVENLABS_API_KEY environment variable)
 
 --tts {apple,google}
-    Choose a text-to-speech engine ('apple' (say) or 'google' (gtts), defaults to 'google')
+    Choose a text-to-speech engine ('apple' (say), 'elevenlabs' or 'google' (gtts), defaults to 'google')
 
 --speech-rate SPEECH_RATE
     The rate at which to play speech. 1.0=normal
