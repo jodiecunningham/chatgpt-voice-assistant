@@ -5,7 +5,7 @@ from chatgpt_voice_assistant.bases.options_parser import OptionsParser
 from chatgpt_voice_assistant.models.command_line_arguments import CommandLineArguments
 
 OPENAI_KEY_ENV_VAR_NAME = "OPENAI_API_KEY"
-
+ELEVENLABS_KEY_ENV_VAR_NAME = "ELEVENLABS_API_KEY"
 
 class CommandLineParser(OptionsParser):
     """Class to parse the command line arguments."""
@@ -17,6 +17,7 @@ class CommandLineParser(OptionsParser):
         """
         parser = argparse.ArgumentParser()
 
+        parser.add_argument("--elevenlabs_api_key", help="ElevenLabs API Key", type=str, default=os.environ.get(ELEVENLABS_KEY_ENV_VAR_NAME))
         parser.add_argument(
             "--log-level",
             help="Whether to print at the debug level or not.",
@@ -60,9 +61,9 @@ class CommandLineParser(OptionsParser):
         )
         parser.add_argument(
             "--tts",
-            choices=["apple", "google"],
+            choices=["apple", "google","elevenlabs"],
             default="google",
-            help="Choose a text-to-speech engine ('apple' (say) or 'google' (gtts), defaults to 'google')",
+            help="Choose a text-to-speech engine ('apple' (say), 'google' (gtts), or 'elevenlabs' (elevenlabs), defaults to 'google')",
         )
         parser.add_argument(
             "--speech-rate",
@@ -78,7 +79,13 @@ class CommandLineParser(OptionsParser):
                 "Open AI Secret Key not specified and OPENAI_API_KEY not set in environment"
             )
 
+        if parsed_args.tts == "elevenlabs" and not parsed_args.elevenlabs_api_key:
+            parser.error(
+                "ElevenLabs API Key not specified and {ELEVENLABS_KEY_ENV_VAR_NAME} not set in environment"
+            )
+
         return CommandLineArguments(
+            elevenlabs_api_key=parsed_args.elevenlabs_api_key,
             input_device_name=parsed_args.input_device_name,
             lang=parsed_args.lang,
             log_level=parsed_args.log_level,
